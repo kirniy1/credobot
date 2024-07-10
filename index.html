@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Telegram.WebApp.requestContact(function(success) {
             if (success) {
                 var phoneNumber = Telegram.WebApp.initDataUnsafe.user.phone_number;
-                alert('Номер телефона получен: ' + phoneNumber);
+                alert('Готово: ' + phoneNumber);
                 
                 // Отправка номера телефона боту
                 Telegram.WebApp.sendData(JSON.stringify({
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 document.getElementById('overlay').classList.add('hidden');
             } else {
-                alert('Не удалось получить номер телефона');
+                alert('Не удалось');
             }
         });
     });
