@@ -33,39 +33,31 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         Telegram.WebApp.ready();
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        document.getElementById('overlay').classList.remove('hidden');
+    }, 2000);
     
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                document.getElementById('overlay').classList.remove('hidden');
-            }, 2000);
-            
-            document.getElementById('shareButton').addEventListener('click', function() {
-                if (Telegram.WebApp.initDataUnsafe.user !== undefined) {
-                    // Пользователь авторизован, можно запросить номер телефона
-                    Telegram.WebApp.showPhoneNumberRequest("Продолжить");
-                    Telegram.WebApp.MainButton.setText('Готово');
-                    Telegram.WebApp.MainButton.hide();
-                } else {
-                    // Пользователь не авторизован, нужно запросить авторизацию
-                    Telegram.WebApp.sendData('request_auth');
-                    Telegram.WebApp.MainButton.setText('Далее');
-                    Telegram.WebApp.MainButton.show();
-                }
-            });
-    
-            Telegram.WebApp.onEvent('mainButtonClicked', function() {
-                Telegram.WebApp.sendData('main_button_clicked');
-            });
-    
-            Telegram.WebApp.MainButton.setText('Войти');
-            Telegram.WebApp.MainButton.show();
-    
-            Telegram.WebApp.onEvent('phoneNumberReceived', function(phoneNumber) {
-  // Обработка полученного номера телефона
-  alert('Номер телефона получен: ' + phoneNumber);
-  document.getElementById('overlay').classList.add('hidden');
-});
+    document.getElementById('shareButton').addEventListener('click', function() {
+        Telegram.WebApp.requestContact(function(success) {
+            if (success) {
+                var phoneNumber = Telegram.WebApp.initDataUnsafe.user.phone_number;
+                alert('Номер телефона получен: ' + phoneNumber);
+                
+                // Отправка номера телефона боту
+                Telegram.WebApp.sendData(JSON.stringify({
+                    action: 'save_phone',
+                    phone: phoneNumber
+                }));
+                
+                document.getElementById('overlay').classList.add('hidden');
+            } else {
+                alert('Не удалось получить номер телефона');
+            }
         });
+    });
+});
     </script>
 </body>
 </html>
