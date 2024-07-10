@@ -42,7 +42,7 @@
             document.getElementById('shareButton').addEventListener('click', function() {
                 if (Telegram.WebApp.initDataUnsafe.user !== undefined) {
                     // Пользователь авторизован, можно запросить номер телефона
-                    Telegram.WebApp.sendData('share_phone');
+                    Telegram.WebApp.showPhoneNumberRequest("Продолжить");
                     Telegram.WebApp.MainButton.setText('Готово');
                     Telegram.WebApp.MainButton.hide();
                 } else {
