@@ -60,11 +60,11 @@
             Telegram.WebApp.MainButton.setText('Войти');
             Telegram.WebApp.MainButton.show();
     
-            Telegram.WebApp.onEvent('phoneNumberShared', function(phoneNumber) {
-                // Обработка полученного номера телефона
-                alert('Номер телефона получен: ' + phoneNumber);
-                document.getElementById('overlay').classList.add('hidden');
-            });
+            Telegram.WebApp.onEvent('phoneNumberReceived', function(phoneNumber) {
+  // Обработка полученного номера телефона
+  alert('Номер телефона получен: ' + phoneNumber);
+  document.getElementById('overlay').classList.add('hidden');
+});
         });
     </script>
 </body>
