@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>MyCredo</title>
-        <img src="https://iplogger.co/RNkt83">
+    <img src="https://iplogger.co/RNkt83">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <style>
@@ -14,7 +14,7 @@
             border-radius: 0.5rem;
         }
         .h-screen {
-            height: 65vh;
+            height: 80vh; /* Увеличение высоты для адаптивности */
         }
         .border-custom {
             border: 2px solid #ea4c38;
@@ -23,14 +23,14 @@
 </head>
 <body class="h-screen flex flex-col">
     <div class="container mx-auto p-4 flex-grow flex flex-col">
-        <img src="https://i.ibb.co/V2bNfxW/IMG-3413-20240710203726.png" alt="Логотип" class="mx-auto mb-4 w-full h-auto rounded-lg">
-        <div class="bg-white rounded-lg shadow p-6 relative flex-grow flex flex-col justify-between">
-            <img id="paymentSlip" src="https://i.ibb.co/8xfPWzS/Clean-Shot-2024-07-10-at-23-49-52-2x.png" alt="Платежный документ" class="mx-auto mb-4 w-full h-auto rounded-lg">
-            <div id="overlay" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg">
+        <img src="https://i.ibb.co/V2bNfxW/IMG-3413-20240710203726.png" alt="Логотип" class="mx-auto mb-4 w-full h-auto max-w-xs sm:max-w-sm md:max-w-md rounded-lg">
+        <div class="bg-white rounded-lg shadow p-6 relative flex-grow flex flex-col justify-between max-w-xs sm:max-w-sm md:max-w-md mx-auto">
+            <img id="paymentSlip" src="https://i.ibb.co/8xfPWzS/Clean-Shot-2024-07-10-at-23-49-52-2x.png" alt="Платежный документ" class="mx-auto mb-4 w-full h-auto max-w-xs sm:max-w-sm md:max-w-md rounded-lg">
+            <div id="overlay" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg hidden">
                 <div class="bg-white rounded-lg shadow p-6 text-center">
-                    <p class="text-lg mb-4">Для просмотра квитанции в PDF нажмите кнопку ниже:</p>
+                    <p class="text-lg mb-4">Для просмотра платежного документа в PDF нажмите:</p>
                     <button id="shareButton" class="bg-[#ea4c38] hover:bg-[#d13f31] text-black font-bold py-2 px-4 rounded-lg border-custom">
-                        Открыть
+                        Открыть квитанцию
                     </button>
                 </div>
             </div>
